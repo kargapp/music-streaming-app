@@ -1,9 +1,7 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
-export async function middleware(request: NextRequest) {
-	return await NextResponse.next();
-}
+export default clerkMiddleware();
 
 export const config = {
-	matcher: [],
+	matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
 };
