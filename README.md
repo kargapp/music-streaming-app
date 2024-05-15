@@ -7,5 +7,5 @@ TODO
 ## Tasks to Do
 
 - [x] push local git repo to GitHub
-- [x] remove next.js boilerplate
-- [ ] configure supabase
+- [x] init supabase auth
+- [ ] add spotify oauth
