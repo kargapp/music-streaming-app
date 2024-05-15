@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 
 import {
 	ClerkProvider,
@@ -10,8 +10,12 @@ import {
 } from "@clerk/nextjs";
 
 import "@/app/styles/globals.css";
+import { cn } from "../library/tailwind";
 
-const inter = Inter({ subsets: ["latin"] });
+const font_sans = FontSans({
+	subsets: ["latin"],
+	variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
 	title: "SpotiBye",
@@ -26,7 +30,12 @@ export default function RootLayout({
 	return (
 		<ClerkProvider>
 			<html lang="en">
-				<body className={inter.className}>
+				<body
+					className={cn(
+						"font-sans antialiased bg-background",
+						font_sans.variable
+					)}
+				>
 					<header>
 						<SignedOut>
 							<SignInButton />
