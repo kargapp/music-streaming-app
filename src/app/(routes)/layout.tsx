@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   ClerkProvider,
@@ -63,14 +64,17 @@ export default function RootLayout({
                 </Button>
               </header>
               <ScrollArea className="grow">
-                {items.map((item) => {
-                  return item;
-                })}
+                <SignedOut>Please sign in.</SignedOut>
+                <SignedIn>
+                  {items.map((item) => {
+                    return item;
+                  })}
+                </SignedIn>
                 <ScrollBar orientation="vertical" />
               </ScrollArea>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={75} className="p-3">
+            <ResizablePanel defaultSize={75} className="space-y-3 p-3">
               <Header />
               <main>{children}</main>
             </ResizablePanel>
@@ -90,14 +94,14 @@ const Header = () => {
         <p className="text-2xl">SpotiBye</p>
       </div>
       <div>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
         <SignedOut>
           <SignInButton>
             <Button variant={"ghost"}>Sign In</Button>
           </SignInButton>
         </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
     </header>
   );
@@ -106,7 +110,10 @@ const Header = () => {
 // TODO: needs props, extract component into another file
 const SidebarPlaylist = () => {
   return (
-    <div className="flex items-center gap-2 rounded p-2 hover:bg-card">
+    <Link
+      href={"/liked-tracks"}
+      className="flex items-center gap-2 rounded p-2 hover:bg-card"
+    >
       <Image
         src={"/liked-tracks-cover.png"}
         width={40}
@@ -115,6 +122,6 @@ const SidebarPlaylist = () => {
         className="rounded"
       />
       <p className="text-lg">Liked Tracks</p>
-    </div>
+    </Link>
   );
 };

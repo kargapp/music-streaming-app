@@ -8,4 +8,5 @@ TODO
 
 - [x] push local git repo to GitHub
 - [x] add spotify oauth
-- [ ] scaffold ui
+- [x] scaffold sidebar ui
+- [ ] add tanstack table
