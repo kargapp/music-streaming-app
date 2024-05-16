@@ -13,7 +13,15 @@ import {
 import "@/app/styles/globals.css";
 import { cn } from "../library/tailwind";
 
-import { Button } from "../components/shadcn/button";
+import { Button } from "@/app/components/shadcn/button";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/app/components/shadcn/resizable";
+import { ScrollArea, ScrollBar } from "../components/shadcn/scroll-area";
+
+import { DashboardIcon, PlusIcon } from "@radix-ui/react-icons";
 
 const font_sans = FontSans({
   subsets: ["latin"],
@@ -30,17 +38,44 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const items = Array(25).fill(<SidebarPlaylist />);
   return (
     <ClerkProvider>
       <html lang="en">
         <body
           className={cn(
-            "bg-background font-sans antialiased",
+            "flex h-screen flex-col bg-background font-sans antialiased",
             font_sans.variable,
           )}
         >
-          <Header />
-          <main>{children}</main>
+          <ResizablePanelGroup direction="horizontal" className="grow">
+            <ResizablePanel
+              defaultSize={25}
+              className="flex flex-col gap-2 p-3"
+            >
+              <header className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <DashboardIcon className="h-6 w-6" />
+                  <p className="text-xl">My Library</p>
+                </div>
+                <Button variant={"ghost"}>
+                  <PlusIcon className="h-5 w-5" />
+                </Button>
+              </header>
+              <ScrollArea className="grow">
+                {items.map((item) => {
+                  return item;
+                })}
+                <ScrollBar orientation="vertical" />
+              </ScrollArea>
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={75} className="p-3">
+              <Header />
+              <main>{children}</main>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+          <div className="h-10 bg-destructive">{"TODO: <Player />"}</div>
         </body>
       </html>
     </ClerkProvider>
@@ -51,7 +86,7 @@ const Header = () => {
   return (
     <header className="flex items-center justify-between">
       <div className="flex items-center gap-1">
-        <Image src={"logo.svg"} width={30} height={30} alt="Spotify Logo" />
+        <Image src={"logo.svg"} width={30} height={30} alt="" />
         <p className="text-2xl">SpotiBye</p>
       </div>
       <div>
@@ -60,10 +95,26 @@ const Header = () => {
         </SignedIn>
         <SignedOut>
           <SignInButton>
-            <Button>Sign In</Button>
+            <Button variant={"ghost"}>Sign In</Button>
           </SignInButton>
         </SignedOut>
       </div>
     </header>
+  );
+};
+
+// TODO: needs props, extract component into another file
+const SidebarPlaylist = () => {
+  return (
+    <div className="flex items-center gap-2 rounded p-2 hover:bg-card">
+      <Image
+        src={"/liked-tracks-cover.png"}
+        width={40}
+        height={40}
+        alt=""
+        className="rounded"
+      />
+      <p className="text-lg">Liked Tracks</p>
+    </div>
   );
 };
