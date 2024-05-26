@@ -79,7 +79,7 @@ export default function RootLayout({
               <main>{children}</main>
             </ResizablePanel>
           </ResizablePanelGroup>
-          <div className="h-10 bg-destructive">{"TODO: <Player />"}</div>
+          {/* <div className="h-10 bg-destructive">{"TODO: <Player />"}</div> */}
         </body>
       </html>
     </ClerkProvider>

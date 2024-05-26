@@ -1,9 +1,17 @@
+import { columns } from "@/app/components/data-table/columns";
+import { DataTable } from "@/app/components/data-table/data-table";
+import { ScrollArea, ScrollBar } from "@/app/components/shadcn/scroll-area";
+import { tracks } from "@/app/library/data";
 import Image from "next/image";
 
 export default async function LikedTracksPage() {
   return (
-    <main className="flex h-full flex-col space-y-3">
+    <main className="space-y-3">
       <Header />
+      <ScrollArea className="">
+        {/* <DataTable columns={columns} data={tracks} /> */}
+        <ScrollBar orientation="vertical" />
+      </ScrollArea>
     </main>
   );
 }
