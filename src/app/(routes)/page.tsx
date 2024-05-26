@@ -10,6 +10,7 @@ export default async function RootPage() {
   );
   return (
     <main>
+      <SignedOut>Please sign in.</SignedOut>
       <SignedIn>
         <pre className="text-green-600">
           {JSON.stringify(token.data, null, 2)}

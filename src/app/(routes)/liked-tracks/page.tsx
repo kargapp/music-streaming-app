@@ -6,10 +6,10 @@ import Image from "next/image";
 
 export default async function LikedTracksPage() {
   return (
-    <main className="space-y-3">
+    <main className="flex grow flex-col space-y-3">
       <Header />
-      <ScrollArea className="">
-        {/* <DataTable columns={columns} data={tracks} /> */}
+      <ScrollArea className="grow">
+        <DataTable columns={columns} data={tracks} />
         <ScrollBar orientation="vertical" />
       </ScrollArea>
     </main>

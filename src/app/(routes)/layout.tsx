@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import Image from "next/image";
-import Link from "next/link";
 
 import {
   ClerkProvider,
@@ -20,9 +19,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/app/components/shadcn/resizable";
-import { ScrollArea, ScrollBar } from "../components/shadcn/scroll-area";
 
-import { DashboardIcon, PlusIcon } from "@radix-ui/react-icons";
+import Sidebar from "../components/layout/sidebar";
 
 const font_sans = FontSans({
   subsets: ["latin"],
@@ -39,7 +37,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const items = Array(25).fill(<SidebarPlaylist />);
   return (
     <ClerkProvider>
       <html lang="en">
@@ -50,43 +47,25 @@ export default function RootLayout({
           )}
         >
           <ResizablePanelGroup direction="horizontal" className="grow">
-            <ResizablePanel
-              defaultSize={25}
-              className="flex flex-col gap-2 p-3"
-            >
-              <header className="flex items-center justify-between">
-                <div className="flex items-center gap-1">
-                  <DashboardIcon className="h-6 w-6" />
-                  <p className="text-xl">My Library</p>
-                </div>
-                <Button variant={"ghost"}>
-                  <PlusIcon className="h-5 w-5" />
-                </Button>
-              </header>
-              <ScrollArea className="grow">
-                <SignedOut>Please sign in.</SignedOut>
-                <SignedIn>
-                  {items.map((item) => {
-                    return item;
-                  })}
-                </SignedIn>
-                <ScrollBar orientation="vertical" />
-              </ScrollArea>
-            </ResizablePanel>
+            <Sidebar />
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={75} className="space-y-3 p-3">
-              <Header />
-              <main>{children}</main>
+            <ResizablePanel
+              defaultSize={75}
+              className="flex flex-col space-y-3 p-3"
+            >
+              <SpotiByeHeader />{" "}
+              {/* WHY: min-h-0 is required to make child ScrollArea scrollable */}
+              <main className="flex min-h-0 grow">{children}</main>
             </ResizablePanel>
           </ResizablePanelGroup>
-          {/* <div className="h-10 bg-destructive">{"TODO: <Player />"}</div> */}
+          <div className="h-10 bg-destructive">{"TODO: <Player />"}</div>
         </body>
       </html>
     </ClerkProvider>
   );
 }
 
-const Header = () => {
+const SpotiByeHeader = () => {
   return (
     <header className="flex items-center justify-between">
       <div className="flex items-center gap-1">
@@ -104,24 +83,5 @@ const Header = () => {
         </SignedIn>
       </div>
     </header>
-  );
-};
-
-// TODO: needs props, extract component into another file
-const SidebarPlaylist = () => {
-  return (
-    <Link
-      href={"/liked-tracks"}
-      className="flex items-center gap-2 rounded p-2 hover:bg-card"
-    >
-      <Image
-        src={"/liked-tracks-cover.png"}
-        width={40}
-        height={40}
-        alt=""
-        className="rounded"
-      />
-      <p className="text-lg">Liked Tracks</p>
-    </Link>
   );
 };
